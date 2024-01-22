@@ -3,5 +3,9 @@ test file disregard
 break it
 Back at you, test
 
+<<<<<<< HEAD
 
 double BREAK
+=======
+BREAK
+>>>>>>> 9a03b48ba62f2c3a9ecd972464f5ddae883c4cda
