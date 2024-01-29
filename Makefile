@@ -259,6 +259,11 @@ UPROGS += \
 	$U/_sleep
 endif
 
+ifeq ($(LAB),util)
+UPROGS += \
+	$U/_pingpong
+endif
+
 UEXTRA=
 ifeq ($(LAB),util)
 	UEXTRA += user/xargstest.sh
