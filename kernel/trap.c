@@ -78,8 +78,32 @@ usertrap(void)
 
   // give up the CPU if this is a timer interrupt.
   if(which_dev == 2)
-    yield();
+  {
+    // if(p->alarmTrapFrame == 0)
+    // {
+    //   struct trapframe *newTrap = kalloc();
+    //   p->alarmTrapFrame = newTrap;
+    //   memmove(p->alarmTrapFrame, p->trapframe, sizeof(*p->trapframe));
+    // }
+    // need to increment tick count, then check interval, then trigger alarm if =
+    p->tickCount++;
+    if(p->tickCount == p->interval)
+    {
+      struct trapframe *newTrap = kalloc();
+      p->alarmTrapFrame = newTrap;
+      memmove(p->alarmTrapFrame, p->trapframe, sizeof(*p->trapframe));
+      p->tickCount = 0;
+      //trigger alarm
+      p->trapframe->epc = p->handler;
+      // so...epc wants an address, handler is a function
+    }
 
+    yield();
+  }
+  
+  // Might need to add something here for Alarmtest, but the above is actually what the hint
+  // mentions, so maybe not
+  // Also need some kind of execution for the handler function
   usertrapret();
 }
 

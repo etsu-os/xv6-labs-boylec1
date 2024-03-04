@@ -98,7 +98,11 @@ struct proc {
   // these are private to the process, so p->lock need not be held.
   uint64 kstack;               // Virtual address of kernel stack
   uint64 sz;                   // Size of process memory (bytes)
+  uint64 handler;              // Place for the handler function to reside
+  int interval;                // Interval for alarm
+  int tickCount;               // How many ticks have happened since the last call, measures time to hitting interval
   pagetable_t pagetable;       // User page table
+  struct trapframe *alarmTrapFrame; // Place to save/retrieve a selected state when an alarm interrupt triggers.
   struct trapframe *trapframe; // data page for trampoline.S
   struct context context;      // swtch() here to run process
   struct file *ofile[NOFILE];  // Open files
