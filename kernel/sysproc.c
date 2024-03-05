@@ -112,13 +112,15 @@ uint64
 sys_sigreturn(void)
 {
   struct proc *p = myproc();
-  
+
   if(p->alarmTrapFrame !=0)
   {
-    // printf value
     memmove(p->trapframe, p->alarmTrapFrame, sizeof(*p->alarmTrapFrame));
-    // printf value
+    
+    p->alarmTrapFrame = 0;
+    p->alarmInProgress = 0;
+    
   }
-  //p->tickCount = 0;
+
   return 0;
 }

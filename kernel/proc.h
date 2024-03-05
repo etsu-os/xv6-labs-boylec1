@@ -101,6 +101,7 @@ struct proc {
   uint64 handler;              // Place for the handler function to reside
   int interval;                // Interval for alarm
   int tickCount;               // How many ticks have happened since the last call, measures time to hitting interval
+  int alarmInProgress;         // Track whether the process is currently in alarm or not
   pagetable_t pagetable;       // User page table
   struct trapframe *alarmTrapFrame; // Place to save/retrieve a selected state when an alarm interrupt triggers.
   struct trapframe *trapframe; // data page for trampoline.S

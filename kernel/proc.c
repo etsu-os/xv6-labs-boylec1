@@ -127,6 +127,7 @@ found:
   p->tickCount = 0;
   p->interval = 0;
   p->handler = 0;
+  p->alarmInProgress = 0;
   // Need to initialize Alarmtest proc fields in here!
 
   // Allocate a trapframe page.
