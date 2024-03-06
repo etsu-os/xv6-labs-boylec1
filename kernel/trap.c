@@ -90,9 +90,9 @@ usertrap(void)
       // Signal that an alarm is currently in progress, and not to call another.      
       p->alarmInProgress = 1;
       // Save the current trapframe in proc->alarmTrapFrame for later restoration.
-      struct trapframe *newTrap = kalloc();      
-      memmove(newTrap, p->trapframe, sizeof(*p->trapframe));
-      p->alarmTrapFrame = newTrap;  
+      //struct trapframe *newTrap = kalloc();      
+      memmove(p->alarmTrapFrame, p->trapframe, sizeof(*p->trapframe));
+      //p->alarmTrapFrame = newTrap;  
       // Point the program counter to the requested handler from the alarm call.
       p->trapframe->epc = p->handler;
     }
