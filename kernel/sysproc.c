@@ -115,12 +115,15 @@ sys_sigreturn(void)
 
   if(p->alarmTrapFrame !=0)
   {    
+    // Restore the saved alarmTrapFrame
     memmove(p->trapframe, p->alarmTrapFrame, sizeof(*p->alarmTrapFrame));
-    
+
+    // Clear alarmTrapFrame and alarmInProgress for future use.
     kfree(p->alarmTrapFrame);
     p->alarmTrapFrame = 0;
     p->alarmInProgress = 0;    
   }
 
+  // Return a0 register (thank you, Charlie)
   return p->trapframe->a0;
 }

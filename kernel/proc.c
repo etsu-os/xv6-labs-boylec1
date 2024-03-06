@@ -125,10 +125,6 @@ found:
   p->pid = allocpid();
   p->state = USED;
   p->tickCount = 0;
-  // p->interval = 0;
-  // p->handler = 0;
-  // p->alarmInProgress = 0;
-  // Need to initialize Alarmtest proc fields in here!
 
   // Allocate a trapframe page.
   if((p->trapframe = (struct trapframe *)kalloc()) == 0){
@@ -136,12 +132,6 @@ found:
     release(&p->lock);
     return 0;
   }
-
-  // if((p->alarmTrapFrame = (struct trapframe *)kalloc()) == 0){
-  //   freeproc(p);
-  //   release(&p->lock);
-  //   return 0;
-  // }
 
   // An empty user page table.
   p->pagetable = proc_pagetable(p);

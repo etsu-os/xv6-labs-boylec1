@@ -79,17 +79,21 @@ usertrap(void)
   // give up the CPU if this is a timer interrupt.
   if(which_dev == 2)
   { 
+    // Increment the ticks
     p->tickCount++;
+    
+    // Check if the interval has been met, and if there is no alarm currently in progress.
     if(p->tickCount <= p->interval && p->alarmInProgress == 0)
     {
+      // Reset tick count
       p->tickCount = 0;
-      //if(p->interval != 0)
-      //{
-        p->alarmInProgress = 1;
-        struct trapframe *newTrap = kalloc();      
-        memmove(newTrap, p->trapframe, sizeof(*p->trapframe));
-        p->alarmTrapFrame = newTrap;     
-      //}      
+      // Signal that an alarm is currently in progress, and not to call another.      
+      p->alarmInProgress = 1;
+      // Save the current trapframe in proc->alarmTrapFrame for later restoration.
+      struct trapframe *newTrap = kalloc();      
+      memmove(newTrap, p->trapframe, sizeof(*p->trapframe));
+      p->alarmTrapFrame = newTrap;  
+      // Point the program counter to the requested handler from the alarm call.
       p->trapframe->epc = p->handler;
     }
     yield();
