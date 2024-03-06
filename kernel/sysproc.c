@@ -114,13 +114,13 @@ sys_sigreturn(void)
   struct proc *p = myproc();
 
   if(p->alarmTrapFrame !=0)
-  {
+  {    
     memmove(p->trapframe, p->alarmTrapFrame, sizeof(*p->alarmTrapFrame));
     
+    kfree(p->alarmTrapFrame);
     p->alarmTrapFrame = 0;
-    p->alarmInProgress = 0;
-    
+    p->alarmInProgress = 0;    
   }
 
-  return 0;
+  return p->trapframe->a0;
 }
