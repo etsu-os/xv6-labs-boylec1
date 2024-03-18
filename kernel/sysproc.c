@@ -119,7 +119,6 @@ sys_sigreturn(void)
     memmove(p->trapframe, p->alarmTrapFrame, sizeof(*p->alarmTrapFrame));
 
     // Clear alarmTrapFrame and alarmInProgress for future use.
-    kfree(p->alarmTrapFrame);
     p->alarmTrapFrame = 0;
     p->alarmInProgress = 0;    
   }
